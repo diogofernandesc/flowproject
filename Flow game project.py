@@ -1,134 +1,158 @@
 import pygame
 
-import pygame.key
+# Defining colours for the circles, paths(lines) and grid background
 
+Black = (0 , 0, 0)
+White = (255, 255, 255)
+Blue = (0 , 0, 255)
+Red = (255, 0, 0)
+Yellow = (255, 255, 0)
+Orange = (255, 100, 0)
+Green = (0, 255, 0)
 
-# Define some colors
-BLACK    = (   0,   0,   0)
-WHITE    = ( 255, 255, 255)
-GREEN    = (   0, 255,   0)
-RED      = ( 255,   0,   0)
- 
+# Defining grid positions for circles
+# Two dimension array so that the first group would represent possible coordinates of x and the second possible ones for y - easier to understand
+grid = [[75,225,375,525,675],[75,225,375,525,675]]
+
+  
 pygame.init()
- 
-# Set the width and height of the screen [width, height]
-size = (750, 750)
-screen = pygame.display.set_mode(size)
- 
-pygame.display.set_caption("My Game")
- 
-# Loop until the user clicks the close button.
+
+# Setting the grid size through width and height of game window
+
+scr_size = (750, 750)
+screen = pygame.display.set_mode(scr_size)
+
+# Naming the caption of the window opened for the Game
+
+pygame.display.set_caption("Flow")
+
+# Loops until the user clicks the close Button
 done = False
- 
-# Used to manage how fast the screen updates
+
+# Change how fast the screen updates
 clock = pygame.time.Clock()
 
-# Starting position of rectangle
 
-circle_x = 50
-circle_y = 50
+# ---- Main program loop ------
 
-# Speed and direction of rectangle
-
-circle_change_x = 5
-circle_change_y = 5
-
-# Speed in pixels per frame
-
-x_speed = 0
-y_speed = 0
-
-
-
-# -------- Main Program Loop -----------
 while not done:
-    # --- Main event loop
-    for event in pygame.event.get(): # User did something
-        if event.type == pygame.QUIT: # If user clicked close
-            done = True # Flag that we are done so we exit this loop
- 
-        
-        elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT:
-                    x_speed += -150
-                elif event.key == pygame.K_RIGHT:
-                    x_speed += 150
-                elif event.key == pygame.K_UP:
-                    y_speed += -150
-                elif event.key == pygame.K_DOWN:
-                    y_speed += 150
-                
-                 
- 
-    # --- Game logic should go here
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            done = True # Closes the game and exits the loop
+            
+    # --- Game logic -----
     
     
-    ''' Movement with mouse
-    global ctr_x
-    global ctr_y
-    pos = pygame.mouse.get_pos()'''
-    ctr_x = 75
-    ctr_y = 75
-    # pygame.mouse.set_visible(False)
-                
-    # --- Drawing code should go here
- 
     
-    screen.fill(BLACK)
     
-    i = 0
-    xpos1 = [150, 0]
-    xpos2 = [150, 750]
-    ypos1 = [0, 150]
-    ypos2 = [750, 150]
     
+    # ---------------------
+    
+    # ----Drawing code + grid built here
+    
+    screen.fill(Black)
+    
+    x_grid_pos1 = [150, 0]
+    x_grid_pos2 = [150, 750] # You need two arrays to define the starting and end positions of the line
+    
+    y_grid_pos1 = [0 , 150]
+    y_grid_pos2 = [750, 150]
+    
+    i = 0 # Initiating control variable for the loop
     while i != 4:
-        pygame.draw.line(screen, WHITE,(xpos1[0], xpos1[1]), (xpos2[0], xpos2[1]))
-        xpos1[0] += 150
-        xpos2[0] += 150
-        pygame.draw.line(screen, WHITE,(ypos1[0], ypos1[1]), (ypos2[0], ypos2[1]))
-        ypos1[1] += 150
-        ypos2[1] += 150
-   
-        i += 1
-
-    # Introduce circles for motion
-    ctr_x += x_speed
-    ctr_y += y_speed
-    if ctr_x < 40:
-        ctr_x = 75
-    
-    # Creating 
-    def draw_circle(colour, ctr_x, ctr_y):
-        # Now I can use this function to create as many circles as I want, with the ability to change colour and position
-        pygame.draw.circle(screen, colour, (ctr_x, ctr_y), 40, 40)
+        pygame.draw.line(screen, White, (x_grid_pos1[0], x_grid_pos1[1]), (x_grid_pos2[0], x_grid_pos2[1]))
+        x_grid_pos1[0] += 150
+        x_grid_pos2[0] += 150 
         
-    draw_circle(RED, ctr_x, ctr_y)
+        # The above code deals with vertical code - incrementing the x values of the coordinates of the lines
+        # Means loop will draw a new line 150 pixels ahead of the previous
+        
+        pygame.draw.line(screen, White, (y_grid_pos1[0], y_grid_pos1[1]), (y_grid_pos2[0], y_grid_pos2[1]))
+        y_grid_pos1[1] += 150
+        y_grid_pos2[1] += 150
+        
+        i += 1 # increment control variable to continue looping
+        
+    # Creating circles for grid
+    class circle():
+        colour = ()
+        ctr_x = ()
+        ctr_y = ()
+     
+    # Red Circle - changing the called values from array 'grid' will change the position on the screen for the grid
+    RedCircle = circle()
+    RedCircle.colour = Red
+    RedCircle.ctr_x = grid[0][0]
+    RedCircle.ctr_y = grid[1][0]
     
-
+    # Blue Circle
+    BlueCircle = circle()
+    BlueCircle.colour = Blue
+    BlueCircle.ctr_x = grid[0][3]
+    BlueCircle.ctr_y = grid[1][4]
+    
+    # Yellow Circle
+    YellowCircle = circle()
+    YellowCircle.colour = Yellow
+    YellowCircle.ctr_x = grid[0][4]
+    YellowCircle.ctr_y = grid[1][1]
+    
+    # Orange Circle
+    OrangeCircle = circle()
+    OrangeCircle.colour = Orange
+    OrangeCircle.ctr_x = grid[0][0]
+    OrangeCircle.ctr_y = grid[1][2]
+    
+    # Green Circle
+    GreenCircle = circle()
+    GreenCircle.colour = Green
+    GreenCircle.ctr_x = grid[0][4]
+    GreenCircle.ctr_y = grid[1][0]
     
     
-    # Cause the ''colour'' rectangle to move:
-    # pygame.draw.circle(screen, WHITE, (circle_x,circle_y), 15, 1)
-    # circle_x += circle_change_x # rect_x = rect_x + 1 would do the same thing; just shorter version -
-    # circle_y += circle_change_y
-
-    # Bounce the rectangle
-
-    if circle_y > 450 or circle_y < 0:
-        circle_change_y = circle_change_y * -1
-    if circle_x > 450 or circle_x < 0:
-        circle_change_x = circle_change_x * -1
-
     
-    # --- Go ahead and update the screen with what we've drawn.
+    
+    # Draws circle(s) on screen
+ 
+    def draw_circle(circle):
+            # Functions draws circle with chosen colour and centre co-ordinates of circle
+            pygame.draw.circle(screen, circle.colour, (circle.ctr_x, circle.ctr_y), 40 , 40)
+            
+    
+    draw_circle(RedCircle)
+    draw_circle(BlueCircle)
+    draw_circle(YellowCircle)
+    draw_circle(OrangeCircle)
+    draw_circle(GreenCircle)
+        
+    # Creating circles 
+    
+  
+    
+   
+    
+    # Update screen with changes
     pygame.display.flip()
- 
-    # --- Limit to 60 frames per second
+        
+    # Define frame rate of game - default at 60
     clock.tick(60)
- 
-# Close the window and quit.
-# If you forget this line, the program will 'hang'
-# on exit if running from IDLE.
+        
+#Quit game
 pygame.quit()
-screen.fill(BLACK)
+screen.fill(Black)
+    
+        
+        
+        
+        
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
