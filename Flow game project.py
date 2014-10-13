@@ -80,36 +80,59 @@ while not done:
         ctr_y = ()
      
     # Red Circle - changing the called values from array 'grid' will change the position on the screen for the grid
-    RedCircle = circle()
-    RedCircle.colour = Red
-    RedCircle.ctr_x = grid[0][0]
-    RedCircle.ctr_y = grid[1][0]
+    RedCircle1 = circle()
+    RedCircle1.colour = Red
+    RedCircle1.ctr_x = grid[0][0]
+    RedCircle1.ctr_y = grid[1][2]
+    
+    RedCircle2 = circle()
+    RedCircle2.colour = Red
+    RedCircle2.ctr_x = grid[0][3]
+    RedCircle2.ctr_y = grid[1][0]
     
     # Blue Circle
-    BlueCircle = circle()
-    BlueCircle.colour = Blue
-    BlueCircle.ctr_x = grid[0][3]
-    BlueCircle.ctr_y = grid[1][4]
+    BlueCircle1 = circle()
+    BlueCircle1.colour = Blue
+    BlueCircle1.ctr_x = grid[0][2]
+    BlueCircle1.ctr_y = grid[1][1]
+    
+    BlueCircle2 = circle()
+    BlueCircle2.colour = Blue
+    BlueCircle2.ctr_x = grid[0][1]
+    BlueCircle2.ctr_y = grid[1][3]
     
     # Yellow Circle
-    YellowCircle = circle()
-    YellowCircle.colour = Yellow
-    YellowCircle.ctr_x = grid[0][4]
-    YellowCircle.ctr_y = grid[1][1]
+    YellowCircle1 = circle()
+    YellowCircle1.colour = Yellow
+    YellowCircle1.ctr_x = grid[0][3]
+    YellowCircle1.ctr_y = grid[1][3]
     
+    YellowCircle2 = circle()
+    YellowCircle2.colour = Yellow
+    YellowCircle2.ctr_x = grid[0][4]
+    YellowCircle2.ctr_y = grid[1][4]
+
     # Orange Circle
-    OrangeCircle = circle()
-    OrangeCircle.colour = Orange
-    OrangeCircle.ctr_x = grid[0][0]
-    OrangeCircle.ctr_y = grid[1][2]
+    OrangeCircle1 = circle()
+    OrangeCircle1.colour = Orange
+    OrangeCircle1.ctr_x = grid[0][0]
+    OrangeCircle1.ctr_y = grid[1][3]
+    
+    OrangeCircle2 = circle()
+    OrangeCircle2.colour = Orange
+    OrangeCircle2.ctr_x = grid[0][4]
+    OrangeCircle2.ctr_y = grid[1][3]
     
     # Green Circle
-    GreenCircle = circle()
-    GreenCircle.colour = Green
-    GreenCircle.ctr_x = grid[0][4]
-    GreenCircle.ctr_y = grid[1][0]
+    GreenCircle1 = circle()
+    GreenCircle1.colour = Green
+    GreenCircle1.ctr_x = grid[0][4]
+    GreenCircle1.ctr_y = grid[1][0]
     
-    
+    GreenCircle2 = circle()
+    GreenCircle2.colour = Green
+    GreenCircle2.ctr_x = grid[0][3]
+    GreenCircle2.ctr_y = grid[0][1]
     
     
     # Draws circle(s) on screen
@@ -119,17 +142,17 @@ while not done:
             pygame.draw.circle(screen, circle.colour, (circle.ctr_x, circle.ctr_y), 40 , 40)
             
     
-    draw_circle(RedCircle)
-    draw_circle(BlueCircle)
-    draw_circle(YellowCircle)
-    draw_circle(OrangeCircle)
-    draw_circle(GreenCircle)
-        
-    # Creating circles 
-    
-  
-    
-   
+    draw_circle(RedCircle1)
+    draw_circle(RedCircle2)
+    draw_circle(BlueCircle1)
+    draw_circle(BlueCircle2)
+    draw_circle(YellowCircle1)
+    draw_circle(YellowCircle2)
+    draw_circle(OrangeCircle1)
+    draw_circle(OrangeCircle2)
+    draw_circle(GreenCircle1)
+    draw_circle(GreenCircle2)
+          
     
     # Update screen with changes
     pygame.display.flip()
