@@ -1,4 +1,6 @@
 import pygame
+import math
+from ibus.modifier import BUTTON1_MASK
 
 # Defining colours for the circles, paths(lines) and grid background
 
@@ -32,6 +34,11 @@ done = False
 # Change how fast the screen updates
 clock = pygame.time.Clock()
 
+pos = pygame.mouse.get_pos()
+mouse_x = pos[0]
+mouse_y = pos[1]
+
+screen.fill(Black)
 
 # ---- Main program loop ------
 
@@ -40,6 +47,9 @@ while not done:
         if event.type == pygame.QUIT:
             done = True # Closes the game and exits the loop
             
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+                pygame.draw.circle(screen, Red,(mouse_x, mouse_y), 20, 20)
+   
     # --- Game logic -----
     
     
@@ -50,7 +60,7 @@ while not done:
     
     # ----Drawing code + grid built here
     
-    screen.fill(Black)
+
     
     x_grid_pos1 = [150, 0]
     x_grid_pos2 = [150, 750] # You need two arrays to define the starting and end positions of the line
@@ -73,12 +83,17 @@ while not done:
         
         i += 1 # increment control variable to continue looping
         
+
+    
+    
     # Creating circles for grid
     class circle():
         colour = ()
         ctr_x = ()
         ctr_y = ()
      
+    global RedCircle1
+    
     # Red Circle - changing the called values from array 'grid' will change the position on the screen for the grid
     RedCircle1 = circle()
     RedCircle1.colour = Red
@@ -142,6 +157,8 @@ while not done:
             pygame.draw.circle(screen, circle.colour, (circle.ctr_x, circle.ctr_y), 40 , 40)
             
     
+            
+    
     draw_circle(RedCircle1)
     draw_circle(RedCircle2)
     draw_circle(BlueCircle1)
@@ -152,8 +169,9 @@ while not done:
     draw_circle(OrangeCircle2)
     draw_circle(GreenCircle1)
     draw_circle(GreenCircle2)
+                   
+            
           
-    
     # Update screen with changes
     pygame.display.flip()
         
@@ -162,7 +180,7 @@ while not done:
         
 #Quit game
 pygame.quit()
-screen.fill(Black)
+
     
         
         
