@@ -41,10 +41,8 @@ screen.fill(Black)
 
 class circle_line():
     def Move(self):
-        screen.fill(Black)
         pos = pygame.mouse.get_pos()
-        pygame.draw.circle(screen, Blue,(pos[0],pos[1]), 20,20)
-    
+        pygame.draw.circle(screen, Blue,(pos[0],pos[1]), 20, 20)
 var = circle_line()
 
 # ---- Main program loop ------
@@ -53,8 +51,11 @@ while not done:
         if event.type == pygame.QUIT:
             done = True # Closes the game and exits the loop
             
-        elif event.type == pygame.MOUSEBUTTONDOWN:
+        elif event.type == pygame.MOUSEMOTION:
+            state = pygame.mouse.get_pressed()
+            if state[0] == 1:
                 var.Move()
+        
    
     # --- Game logic -----
     
