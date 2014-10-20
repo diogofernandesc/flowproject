@@ -1,6 +1,5 @@
 import pygame
 import math
-from ibus.modifier import BUTTON1_MASK
 
 # Defining colours for the circles, paths(lines) and grid background
 
@@ -40,15 +39,22 @@ mouse_y = pos[1]
 
 screen.fill(Black)
 
-# ---- Main program loop ------
+class circle_line():
+    def Move(self):
+        screen.fill(Black)
+        pos = pygame.mouse.get_pos()
+        pygame.draw.circle(screen, Blue,(pos[0],pos[1]), 20,20)
+    
+var = circle_line()
 
+# ---- Main program loop ------
 while not done:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             done = True # Closes the game and exits the loop
             
         elif event.type == pygame.MOUSEBUTTONDOWN:
-                pygame.draw.circle(screen, Red,(mouse_x, mouse_y), 20, 20)
+                var.Move()
    
     # --- Game logic -----
     
@@ -87,12 +93,11 @@ while not done:
     
     
     # Creating circles for grid
+    
     class circle():
         colour = ()
         ctr_x = ()
         ctr_y = ()
-     
-    global RedCircle1
     
     # Red Circle - changing the called values from array 'grid' will change the position on the screen for the grid
     RedCircle1 = circle()
