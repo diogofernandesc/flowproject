@@ -1,6 +1,5 @@
 import pygame
 import math
-
 # Defining colours for the circles, paths(lines) and grid background
 
 Black = (0 , 0, 0)
@@ -33,28 +32,66 @@ done = False
 # Change how fast the screen updates
 clock = pygame.time.Clock()
 
-pos = pygame.mouse.get_pos()
-mouse_x = pos[0]
-mouse_y = pos[1]
-
 screen.fill(Black)
 
+class grid_circle(pygame.sprite.Sprite): 
+    def __init__(self, ctr_x, ctr_y, colour):
+        pygame.sprite.Sprite.__init__(self)
+        self.ctr_x = ctr_x
+        self.ctr_y = ctr_y
+        self.radius = 40
+        self.colour = colour
+        
+    def render(self):
+        pygame.draw.circle(screen, self.colour, (self.ctr_x, self.ctr_y), self.radius, 40)
+        
+global x
+global y
+global GridCircle
+x = 0 
+y = 0
+
+def click_detection(GridCircle):
+    pos = pygame.mouse.get_pos()
+    if ((GridCircle.ctr_x - GridCircle.radius) <= x) and ((GridCircle.ctr_x + GridCircle.radius) >= x):
+        if ((GridCircle.ctr_y - GridCircle.radius) <= y) and ((GridCircle.ctr_y + GridCircle.radius) >= y):
+            return True
+    else:
+        return False
+         
+
+    
 class circle_line():
     def Move(self):
+        
         pos = pygame.mouse.get_pos()
-        pygame.draw.circle(screen, Blue,(pos[0],pos[1]), 20, 20)
-var = circle_line()
+        self.x = pos[0]
+        self.y = pos[1]
+        pygame.draw.circle(screen, grid_circle.colour,(pos[0],pos[1]), 20, 20)
+        
+        
+moving_line = circle_line()
+
+        
+RedCircle1 = grid_circle(grid[0][3], grid[1][0], Red)
+RedCircle1.render() 
 
 # ---- Main program loop ------
 while not done:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             done = True # Closes the game and exits the loop
-            
+        
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            x, y = event.pos
+            click_detection(RedCircle1)
+                
         elif event.type == pygame.MOUSEMOTION:
             state = pygame.mouse.get_pressed()
-            if state[0] == 1:
-                var.Move()
+            if click_detection(RedCircle1) == True: 
+                if state[0] == 1:
+                    moving_line.Move()
+                            
         
    
     # --- Game logic -----
@@ -95,87 +132,47 @@ while not done:
     
     # Creating circles for grid
     
-    class circle():
-        colour = ()
-        ctr_x = ()
-        ctr_y = ()
+    circle_grid_list = pygame.sprite.Group()
+    all_sprites_list = pygame.sprite.Group()
     
-    # Red Circle - changing the called values from array 'grid' will change the position on the screen for the grid
-    RedCircle1 = circle()
-    RedCircle1.colour = Red
-    RedCircle1.ctr_x = grid[0][0]
-    RedCircle1.ctr_y = grid[1][2]
+    # Red Circle Pair
     
-    RedCircle2 = circle()
-    RedCircle2.colour = Red
-    RedCircle2.ctr_x = grid[0][3]
-    RedCircle2.ctr_y = grid[1][0]
+    RedCircle1 = grid_circle(grid[0][3], grid[1][0], Red)
+    RedCircle2 = grid_circle(grid[0][0], grid[1][2], Red)
+    RedCircle1.render()
+    RedCircle2.render()
     
-    # Blue Circle
-    BlueCircle1 = circle()
-    BlueCircle1.colour = Blue
-    BlueCircle1.ctr_x = grid[0][2]
-    BlueCircle1.ctr_y = grid[1][1]
+    # Blue Circle Pair
     
-    BlueCircle2 = circle()
-    BlueCircle2.colour = Blue
-    BlueCircle2.ctr_x = grid[0][1]
-    BlueCircle2.ctr_y = grid[1][3]
+    BlueCircle1 = grid_circle(grid[0][2], grid[1][1], Blue)
+    BlueCircle2 = grid_circle(grid[0][1], grid[1][3], Blue)
+    BlueCircle1.render()
+    BlueCircle2.render()
     
-    # Yellow Circle
-    YellowCircle1 = circle()
-    YellowCircle1.colour = Yellow
-    YellowCircle1.ctr_x = grid[0][3]
-    YellowCircle1.ctr_y = grid[1][3]
+    # Green Circle Pair
     
-    YellowCircle2 = circle()
-    YellowCircle2.colour = Yellow
-    YellowCircle2.ctr_x = grid[0][4]
-    YellowCircle2.ctr_y = grid[1][4]
-
-    # Orange Circle
-    OrangeCircle1 = circle()
-    OrangeCircle1.colour = Orange
-    OrangeCircle1.ctr_x = grid[0][0]
-    OrangeCircle1.ctr_y = grid[1][3]
+    GreenCircle1 = grid_circle(grid[0][4], grid[1][0], Green)
+    GreenCircle2 = grid_circle(grid[0][3], grid[1][1], Green)
+    GreenCircle1.render()
+    GreenCircle2.render()
     
-    OrangeCircle2 = circle()
-    OrangeCircle2.colour = Orange
-    OrangeCircle2.ctr_x = grid[0][4]
-    OrangeCircle2.ctr_y = grid[1][3]
+    # Orange Circle Pair
     
-    # Green Circle
-    GreenCircle1 = circle()
-    GreenCircle1.colour = Green
-    GreenCircle1.ctr_x = grid[0][4]
-    GreenCircle1.ctr_y = grid[1][0]
+    OrangeCircle1 = grid_circle(grid[0][4], grid[1][3], Orange)
+    OrangeCircle2 = grid_circle(grid[0][0], grid[1][3], Orange)
+    OrangeCircle1.render()
+    OrangeCircle2.render()
     
-    GreenCircle2 = circle()
-    GreenCircle2.colour = Green
-    GreenCircle2.ctr_x = grid[0][3]
-    GreenCircle2.ctr_y = grid[0][1]
+    # Yellow Circle Pair
     
+    YellowCircle1 = grid_circle(grid[0][3], grid[1][3], Yellow)
+    YellowCircle2 = grid_circle(grid[0][4], grid[1][4], Yellow)
+    YellowCircle1.render()
+    YellowCircle2.render()
     
-    # Draws circle(s) on screen
- 
-    def draw_circle(circle):
-            # Functions draws circle with chosen colour and centre co-ordinates of circle
-            pygame.draw.circle(screen, circle.colour, (circle.ctr_x, circle.ctr_y), 40 , 40)
-            
+    circle_grid_list.add(RedCircle1, RedCircle2, BlueCircle1, BlueCircle2, GreenCircle1, GreenCircle2, OrangeCircle1, OrangeCircle2, YellowCircle1, YellowCircle2)
+    all_sprites_list.add(RedCircle1, RedCircle2, BlueCircle1, BlueCircle2, GreenCircle1, GreenCircle2, OrangeCircle1, OrangeCircle2, YellowCircle1, YellowCircle2)
     
-            
-    
-    draw_circle(RedCircle1)
-    draw_circle(RedCircle2)
-    draw_circle(BlueCircle1)
-    draw_circle(BlueCircle2)
-    draw_circle(YellowCircle1)
-    draw_circle(YellowCircle2)
-    draw_circle(OrangeCircle1)
-    draw_circle(OrangeCircle2)
-    draw_circle(GreenCircle1)
-    draw_circle(GreenCircle2)
-                   
             
           
     # Update screen with changes
