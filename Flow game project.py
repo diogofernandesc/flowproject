@@ -47,7 +47,8 @@ class grid_circle(pygame.sprite.Sprite):
         
 global x
 global y
-global GridCircle
+global colour
+
 x = 0 
 y = 0
 
@@ -67,42 +68,86 @@ class circle_line():
         pos = pygame.mouse.get_pos()
         self.x = pos[0]
         self.y = pos[1]
-        pygame.draw.circle(screen, grid_circle.colour,(pos[0],pos[1]), 20, 20)
+        pygame.draw.circle(screen, colour,(pos[0],pos[1]), 20, 20)
+        pygame.draw.circle(screen, colour,(pos[0],pos[1]), 20, 20)
+        pygame.draw.circle(screen, colour,(pos[0],pos[1]), 20, 20)
+        pygame.draw.circle(screen, colour,(pos[0],pos[1]), 20, 20)
+        pygame.draw.circle(screen, colour,(pos[0],pos[1]), 20, 20)
+        
+        ''' I draw extra circles because if the user draws the line very quickly there is large gaps between circles 
+        so it doesn't look like a line, this sort of eliminates that problem, there is probably a better solution'''
         
         
 moving_line = circle_line()
 
         
+# Creating circles for grid
+    
+circle_grid_list = pygame.sprite.Group()
+all_sprites_list = pygame.sprite.Group()
+    
+# Red Circle Pair
+    
 RedCircle1 = grid_circle(grid[0][3], grid[1][0], Red)
-RedCircle1.render() 
+RedCircle2 = grid_circle(grid[0][0], grid[1][2], Red)
+RedCircle1.render()
+RedCircle2.render()
+    
+# Blue Circle Pair
+    
+BlueCircle1 = grid_circle(grid[0][2], grid[1][1], Blue)
+BlueCircle2 = grid_circle(grid[0][1], grid[1][3], Blue)
+BlueCircle1.render()
+BlueCircle2.render()
+    
+# Green Circle Pair
+    
+GreenCircle1 = grid_circle(grid[0][4], grid[1][0], Green)
+GreenCircle2 = grid_circle(grid[0][3], grid[1][1], Green)
+GreenCircle1.render()
+GreenCircle2.render()
+    
+# Orange Circle Pair
+    
+OrangeCircle1 = grid_circle(grid[0][4], grid[1][3], Orange)
+OrangeCircle2 = grid_circle(grid[0][0], grid[1][3], Orange)
+OrangeCircle1.render()
+OrangeCircle2.render()
+    
+ # Yellow Circle Pair
+    
+YellowCircle1 = grid_circle(grid[0][3], grid[1][3], Yellow)
+YellowCircle2 = grid_circle(grid[0][4], grid[1][4], Yellow)
+YellowCircle1.render()
+YellowCircle2.render()
+    
+circle_grid_list.add(RedCircle1, RedCircle2, BlueCircle1, BlueCircle2, GreenCircle1, GreenCircle2, OrangeCircle1, OrangeCircle2, YellowCircle1, YellowCircle2)
+all_sprites_list.add(RedCircle1, RedCircle2, BlueCircle1, BlueCircle2, GreenCircle1, GreenCircle2, OrangeCircle1, OrangeCircle2, YellowCircle1, YellowCircle2)
+
+
 
 # ---- Main program loop ------
 while not done:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             done = True # Closes the game and exits the loop
-        
+            
         elif event.type == pygame.MOUSEBUTTONDOWN:
             x, y = event.pos
-            click_detection(RedCircle1)
+            
+            # This event is used to assign values to x and y to check the value of the function in the mouse motion event
+            
+            
                 
         elif event.type == pygame.MOUSEMOTION:
             state = pygame.mouse.get_pressed()
-            if click_detection(RedCircle1) == True: 
-                if state[0] == 1:
-                    moving_line.Move()
+            for circle in circle_grid_list:
+                if click_detection(circle) == True:
+                    colour = circle.colour
+                    if state[0] == 1:
+                        moving_line.Move()
                             
-        
-   
-    # --- Game logic -----
-    
-    
-    
-    
-    
-    # ---------------------
-    
-    # ----Drawing code + grid built here
+    # --- grid built here
     
 
     
@@ -126,54 +171,6 @@ while not done:
         y_grid_pos2[1] += 150
         
         i += 1 # increment control variable to continue looping
-        
-
-    
-    
-    # Creating circles for grid
-    
-    circle_grid_list = pygame.sprite.Group()
-    all_sprites_list = pygame.sprite.Group()
-    
-    # Red Circle Pair
-    
-    RedCircle1 = grid_circle(grid[0][3], grid[1][0], Red)
-    RedCircle2 = grid_circle(grid[0][0], grid[1][2], Red)
-    RedCircle1.render()
-    RedCircle2.render()
-    
-    # Blue Circle Pair
-    
-    BlueCircle1 = grid_circle(grid[0][2], grid[1][1], Blue)
-    BlueCircle2 = grid_circle(grid[0][1], grid[1][3], Blue)
-    BlueCircle1.render()
-    BlueCircle2.render()
-    
-    # Green Circle Pair
-    
-    GreenCircle1 = grid_circle(grid[0][4], grid[1][0], Green)
-    GreenCircle2 = grid_circle(grid[0][3], grid[1][1], Green)
-    GreenCircle1.render()
-    GreenCircle2.render()
-    
-    # Orange Circle Pair
-    
-    OrangeCircle1 = grid_circle(grid[0][4], grid[1][3], Orange)
-    OrangeCircle2 = grid_circle(grid[0][0], grid[1][3], Orange)
-    OrangeCircle1.render()
-    OrangeCircle2.render()
-    
-    # Yellow Circle Pair
-    
-    YellowCircle1 = grid_circle(grid[0][3], grid[1][3], Yellow)
-    YellowCircle2 = grid_circle(grid[0][4], grid[1][4], Yellow)
-    YellowCircle1.render()
-    YellowCircle2.render()
-    
-    circle_grid_list.add(RedCircle1, RedCircle2, BlueCircle1, BlueCircle2, GreenCircle1, GreenCircle2, OrangeCircle1, OrangeCircle2, YellowCircle1, YellowCircle2)
-    all_sprites_list.add(RedCircle1, RedCircle2, BlueCircle1, BlueCircle2, GreenCircle1, GreenCircle2, OrangeCircle1, OrangeCircle2, YellowCircle1, YellowCircle2)
-    
-            
           
     # Update screen with changes
     pygame.display.flip()
