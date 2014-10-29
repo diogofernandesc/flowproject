@@ -1,5 +1,6 @@
 import pygame
 import math
+from operator import pos
 # Defining colours for the circles, paths(lines) and grid background
 
 Black = (0 , 0, 0)
@@ -48,6 +49,7 @@ class grid_circle(pygame.sprite.Sprite):
 global x
 global y
 global colour
+colour = 0, 0, 0
 
 x = 0 
 y = 0
@@ -59,27 +61,39 @@ def click_detection(GridCircle):
             return True
     else:
         return False
-         
-
     
+
 class circle_line():
-    def Move(self):
-        
+    def attributes(self):
         pos = pygame.mouse.get_pos()
         self.x = pos[0]
         self.y = pos[1]
-        pygame.draw.circle(screen, colour,(pos[0],pos[1]), 20, 20)
-        pygame.draw.circle(screen, colour,(pos[0],pos[1]), 20, 20)
-        pygame.draw.circle(screen, colour,(pos[0],pos[1]), 20, 20)
-        pygame.draw.circle(screen, colour,(pos[0],pos[1]), 20, 20)
-        pygame.draw.circle(screen, colour,(pos[0],pos[1]), 20, 20)
-        
+        x = pos[0]
+        y = pos[1]
+    def Move(self):
+        pos = pygame.mouse.get_pos()
+        self.x = pos[0]
+        self.y = pos[1]
+        pygame.draw.circle(screen, colour,(pos[0],pos[1]), 10, 10)
+        pygame.display.flip()
+        ''' I draw extra circles because if the user draws the line very quickly there is large gaps between circles 
+        so it doesn't look like a line, this sort of eliminates that problem, there is probably a better solution'''
         ''' I draw extra circles because if the user draws the line very quickly there is large gaps between circles 
         so it doesn't look like a line, this sort of eliminates that problem, there is probably a better solution'''
         
-        
+
+
+global moving_line
 moving_line = circle_line()
 
+
+def movement_checker():
+    pos = pygame.mouse.get_pos()
+    while (35 <= pos[1] <= 715):
+        while (35 <= pos[0] <= 715):
+            print("Yes")
+            return True
+   
         
 # Creating circles for grid
     
@@ -145,7 +159,9 @@ while not done:
                 if click_detection(circle) == True:
                     colour = circle.colour
                     if state[0] == 1:
-                        moving_line.Move()
+                        while movement_checker() == True:
+                            moving_line.Move()
+                        
                             
     # --- grid built here
     
