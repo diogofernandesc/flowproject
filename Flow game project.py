@@ -37,6 +37,22 @@ clock = pygame.time.Clock()
 # Fill Screen in Black
 screen.fill(Black)
 
+# --- KEYBOARD OPTIONS -----
+
+x_kspeed = 0
+y_kspeed = 0
+
+k_x = 0
+k_y = 0
+
+
+
+
+
+
+
+#--------------------------
+
 class grid_circle(pygame.sprite.Sprite):
     # Stationary circles class you need a pair of each colour
     def __init__(self, ctr_x, ctr_y, colour):
@@ -66,7 +82,7 @@ def click_detection(GridCircle):
         return False
     
 
-class circle_line():
+class circle_line_mouse():
     '''Class for the moving line "circle_line" because the line is made up of individual circles'''
     def Move(self):
         ''' Move method takes the coordinates of where the mouse is pointing and its own coordinates
@@ -77,10 +93,13 @@ class circle_line():
         pygame.draw.circle(screen, colour, (pos[0], pos[1]), 10, 10)
         pygame.display.flip()
         
+        
+def draw_keyboard():
+    pygame.draw.circle(screen, colour, (k_x, k_x), 10, 10)
 
 
-global moving_line
-moving_line = circle_line()
+global moving_line_mouse
+moving_line_mouse = circle_line_mouse()
 
 
 def movement_checker():
@@ -94,7 +113,7 @@ def movement_checker():
         - So if the mouse is at this x-coordinates then the following if statement checks whether the y is at the invalid y values and returns false'''
     
     
-    if (0 <= pos[1] <= 64) or (686 <= pos[1] <= 750) or (0 <= pos[0] <= 64) or (686 <= pos[0] <= 750):
+    if (0 <= pos[1] <= 44) or (706 <= pos[1] <= 750) or (0 <= pos[0] <= 44) or (706 <= pos[0] <= 750):
         # Can't draw on the outer side of the circles towards the window wall
         return False
 
@@ -199,18 +218,32 @@ def build_grid():
         i += 1  # increment control variable to continue looping
             
 build_grid()
+global colour
+colour = 5,5,5
+global x_kspeed
+global y_kspeed
+
+x_kspeed = 0
+y_kspeed = 0
 
 # ---- Main program loop ------
 ''' *** IN PROGRESS *** '''
 while not done:
+    pressed = pygame.key.get_pressed()
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             done = True  # Closes the game and exits the loop
             
         elif event.type == pygame.MOUSEBUTTONDOWN:
-            x, y = event.pos 
+            x, y = event.pos
+            x_kspeed, y_kspeed = event.pos
+            pygame.mouse.set_visible(False)
             ''' If the user clicks down on the left button the mouse coordinates at that point are assigned to variables 
             x and y which are used to check the condition of the click_detection function'''
+            
+        elif event.type == pygame.MOUSEBUTTONUP:
+            pygame.mouse.set_visible(True)
+            # Makes the cursor visible to choose a new circle easily
           
         elif event.type == pygame.MOUSEMOTION:
             ''' State is assigned to an array for each of three mouse buttons
@@ -231,12 +264,29 @@ while not done:
                         print("can draw")
                         if state[0] == 1:
                             # Checking the left mouse button state, if 1 then button is being clicked or held down
-                            moving_line.Move()
+                            moving_line_mouse.Move()
                             
                     elif movement_checker() == False:
                         # Used to stop the move method for the moving_line object from being called if movement checker is false
                         print("Can't draw")
                             
+        # --------- KEYBOARD OPTIONS -------------- 
+             
+        elif movement_checker() != False:
+            if pressed[pygame.K_LEFT]:
+                x_kspeed += -3
+                
+                    
+            if pressed[pygame.K_RIGHT]:
+                x_kspeed += 3
+                    
+            if pressed[pygame.K_UP]:
+                y_kspeed += -3
+                    
+            if pressed[pygame.K_DOWN]:
+                y_kspeed += 3
+    
+            pygame.draw.circle(screen, colour, (x_kspeed, y_kspeed), 10, 10) 
                             
     # Update screen with changes
     pygame.display.flip()
