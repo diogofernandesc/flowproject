@@ -1,7 +1,7 @@
 import pygame
 import Main
 
-scr_size = (750, 750)
+scr_size = (600, 600)
 screen = pygame.display.set_mode(scr_size)
 White = (255, 255, 255)
 # --- grid built here
@@ -10,14 +10,14 @@ def build_grid():
     ''' You need two arrays to define the starting and end positions of the line:
     Because it draws lines, they take two pairs of x-coordinates; one for the start of the line and one for the end'''
     
-    x_grid_pos1 = [150, 0]
-    x_grid_pos2 = [150, 750]  
+    x_grid_pos1 = [100, 0]
+    x_grid_pos2 = [100, 600]  
         
-    y_grid_pos1 = [0 , 150]
-    y_grid_pos2 = [750, 150]
+    y_grid_pos1 = [0 , 100]
+    y_grid_pos2 = [600, 100]
         
     i = 0  # Initiating control variable for the loop
-    while i != 4:
+    while i != 6:
         ''' ***Very important***:
         - This while loop is used to control the intervals in which the lines are drawn for the grid
         - 750x750 grid so divided by 5 gives 150px intervals
@@ -26,15 +26,15 @@ def build_grid():
         - i is looped 4 times because 4 lines are drawn in each direction'''
         
         pygame.draw.line(screen,White, (x_grid_pos1[0], x_grid_pos1[1]), (x_grid_pos2[0], x_grid_pos2[1]))
-        x_grid_pos1[0] += 150
-        x_grid_pos2[0] += 150 
+        x_grid_pos1[0] += 100
+        x_grid_pos2[0] += 100 
             
         # The above code deals with vertical code - incrementing the x values of the coordinates of the lines
         # Means loop will draw a new line 150 pixels ahead of the previous
             
         pygame.draw.line(screen, White, (y_grid_pos1[0], y_grid_pos1[1]), (y_grid_pos2[0], y_grid_pos2[1]))
-        y_grid_pos1[1] += 150
-        y_grid_pos2[1] += 150
+        y_grid_pos1[1] += 100
+        y_grid_pos2[1] += 100
             
         i += 1  # increment control variable to continue looping
             

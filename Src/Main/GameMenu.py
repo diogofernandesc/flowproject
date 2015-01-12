@@ -1,8 +1,4 @@
 import pygame
-import Main
-
-
-
 class MenuItem(pygame.font.Font):
     def __init__(self, text, font=None, font_size=30,
                  font_color=(255, 255, 255), (pos_x, pos_y)=(0, 0)):
